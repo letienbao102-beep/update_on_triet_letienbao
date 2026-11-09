@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PhiloMaster 600 — Hệ Thống Ôn Thi & Thi Thử Triết Học Mác - Lênin (BAS 123)</title>
+  <title>Ôn Triết Học Mác Lê - Nin — Hệ Thống Ôn Thi & Thi Thử Triết Học Mác - Lênin (BAS 123)</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,37 +30,227 @@
       }
     }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
   <style>
-    body { font-family: 'Inter', sans-serif; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', sans-serif;
+      background-attachment: fixed;
+    }
     .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.4); border-radius: 9999px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.6); }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-    .animate-fade-in { animation: fadeIn 0.22s ease-out forwards; }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.45); border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.7); }
 
-  <!-- TOP NAVIGATION BAR -->
-  <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px) scale(0.992); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .animate-fade-in { animation: fadeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+    @keyframes floatBlob {
+      0%, 100% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(35px, -30px) scale(1.08); }
+      66% { transform: translate(-25px, 25px) scale(0.94); }
+    }
+    .liquid-blob { animation: floatBlob 14s ease-in-out infinite; }
+    .liquid-blob-delay-1 { animation: floatBlob 18s ease-in-out infinite reverse; }
+    .liquid-blob-delay-2 { animation: floatBlob 16s ease-in-out 2s infinite; }
+
+    /* GPU-Optimized iOS Liquid Glass & Interactive Click Water Droplet Physics */
+    @keyframes dropletMorph {
+      0%, 100% { border-radius: 54% 46% 48% 52% / 52% 54% 46% 48%; transform: translate3d(0, 0, 0) scale(1); }
+      50% { border-radius: 42% 58% 62% 38% / 45% 38% 62% 55%; transform: translate3d(12px, -18px, 0) scale(1.04, 0.96); }
+    }
+
+
+
+    /* Ambient Decorative Droplets (Lightweight GPU-only, no backdrop-filter) */
+    .ios-water-droplet {
+      position: absolute;
+      will-change: transform;
+      background: radial-gradient(
+        120% 120% at 28% 24%,
+        rgba(255, 255, 255, 0.88) 0%,
+        rgba(255, 255, 255, 0.38) 22%,
+        rgba(165, 180, 252, 0.22) 60%,
+        rgba(99, 102, 241, 0.14) 85%,
+        rgba(255, 255, 255, 0.55) 100%
+      );
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      box-shadow:
+        inset 5px 7px 14px rgba(255, 255, 255, 0.92),
+        inset -6px -8px 16px rgba(79, 70, 229, 0.18),
+        0 12px 26px -6px rgba(30, 27, 75, 0.12);
+      animation: dropletMorph 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .ios-water-droplet::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      left: 19%;
+      width: 25%;
+      height: 15%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      transform: rotate(-28deg);
+    }
+    .dark .ios-water-droplet {
+      background: radial-gradient(
+        120% 120% at 28% 24%,
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(129, 140, 248, 0.22) 28%,
+        rgba(30, 41, 59, 0.35) 68%,
+        rgba(165, 180, 252, 0.28) 100%
+      );
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        inset 3px 5px 12px rgba(255, 255, 255, 0.4),
+        inset -5px -6px 14px rgba(99, 102, 241, 0.28);
+    }
+
+    /* Smooth Responsive Controls */
+    button, select, input {
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      touch-action: manipulation;
+    }
+    button:active {
+      transform: scale(0.96);
+    }
+
+    /* iOS Liquid Glass Morphism (Optimized for 60fps across low & high-end devices) */
+    .liquid-glass {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.54) 100%) !important;
+      backdrop-filter: blur(16px) saturate(165%);
+      -webkit-backdrop-filter: blur(16px) saturate(165%);
+      border: 1px solid rgba(255, 255, 255, 0.78) !important;
+      box-shadow:
+        0 10px 28px -6px rgba(31, 38, 135, 0.08),
+        0 2px 8px -2px rgba(31, 38, 135, 0.04),
+        inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 1px 0 rgba(255, 255, 255, 0.35) !important;
+      transform: translateZ(0);
+    }
+    .dark .liquid-glass {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.76) 0%, rgba(15, 23, 42, 0.62) 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      box-shadow:
+        0 12px 32px -8px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+        inset 0 -1px 1px 0 rgba(255, 255, 255, 0.05) !important;
+    }
+    .liquid-glass-interactive:hover {
+      transform: translate3d(0, -2px, 0);
+      box-shadow:
+        0 16px 36px -8px rgba(79, 70, 229, 0.15),
+        inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.98) !important;
+    }
+    .dark .liquid-glass-interactive:hover {
+      box-shadow:
+        0 16px 36px -8px rgba(99, 102, 241, 0.25),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.28) !important;
+    }
+    .liquid-header {
+      background: rgba(255, 255, 255, 0.72) !important;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.75) !important;
+      box-shadow: 0 6px 22px -6px rgba(31, 38, 135, 0.07), inset 0 1px 0 0 rgba(255, 255, 255, 0.85);
+      transform: translateZ(0);
+    }
+    .dark .liquid-header {
+      background: rgba(15, 23, 42, 0.76) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 6px 22px -6px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+    }
+    .liquid-pill-dock {
+      background: rgba(241, 245, 249, 0.75) !important;
+      border: 1px solid rgba(255, 255, 255, 0.82) !important;
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(255, 255, 255, 0.45);
+    }
+    .dark .liquid-pill-dock {
+      background: rgba(30, 41, 59, 0.75) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
+    .liquid-hero {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.92) 0%, rgba(109, 40, 217, 0.88) 50%, rgba(37, 99, 235, 0.92) 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.38) !important;
+      box-shadow:
+        0 20px 42px -12px rgba(79, 70, 229, 0.32),
+        inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1.5px 2px 0 rgba(255, 255, 255, 0.15) !important;
+      transform: translateZ(0);
+    }
+
+    /* Automatic Low-End Device & Reduced Motion Optimization */
+    @media (max-width: 768px), (prefers-reduced-motion: reduce) {
+      .liquid-glass, .liquid-header {
+        backdrop-filter: blur(10px) saturate(140%);
+        -webkit-backdrop-filter: blur(10px) saturate(140%);
+      }
+      .liquid-blob, .liquid-blob-delay-1, .liquid-blob-delay-2 {
+        animation: none !important;
+      }
+    }
+    body.perf-lite .liquid-glass,
+    body.perf-lite .liquid-header {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background: rgba(255, 255, 255, 0.94) !important;
+    }
+    .dark body.perf-lite .liquid-glass,
+    .dark body.perf-lite .liquid-header {
+      background: rgba(15, 23, 42, 0.94) !important;
+    }
+    body.perf-lite .liquid-blob,
+    body.perf-lite .liquid-blob-delay-1,
+    body.perf-lite .liquid-blob-delay-2,
+    body.perf-lite .ios-water-droplet {
+      animation: none !important;
+    }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-100/80 via-sky-50 to-purple-100/80 text-slate-800 dark:from-slate-950 dark:via-indigo-950/60 dark:to-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300 relative overflow-x-hidden">
+
+  <!-- iOS Liquid Glass Ambient Mesh Blobs & 3D Floating Water Droplets -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+    <div class="liquid-blob absolute -top-24 -left-24 w-96 h-96 rounded-full bg-gradient-to-br from-indigo-400/35 to-cyan-300/35 dark:from-indigo-600/25 dark:to-cyan-500/20 blur-3xl"></div>
+    <div class="liquid-blob-delay-1 absolute top-1/3 -right-28 w-[28rem] h-[28rem] rounded-full bg-gradient-to-bl from-fuchsia-400/30 to-violet-400/30 dark:from-fuchsia-600/20 dark:to-violet-600/20 blur-3xl"></div>
+    <div class="liquid-blob-delay-2 absolute -bottom-28 left-1/4 w-[26rem] h-[26rem] rounded-full bg-gradient-to-tr from-sky-300/35 to-emerald-300/25 dark:from-sky-600/20 dark:to-emerald-500/15 blur-3xl"></div>
+
+    <!-- iPhone-style 3D Refractive Water Droplets -->
+    <div class="ios-water-droplet w-24 h-24 top-[12%] left-[6%] opacity-80" style="animation-duration: 13s;"></div>
+    <div class="ios-water-droplet w-14 h-14 top-[18%] left-[11%] opacity-70" style="animation-duration: 9s; animation-delay: -3s;"></div>
+    <div class="ios-water-droplet w-32 h-32 top-[62%] right-[5%] opacity-75" style="animation-duration: 15s; animation-delay: -5s;"></div>
+    <div class="ios-water-droplet w-16 h-16 top-[56%] right-[11%] opacity-65" style="animation-duration: 10s; animation-delay: -2s;"></div>
+    <div class="ios-water-droplet w-20 h-20 bottom-[10%] left-[18%] opacity-70" style="animation-duration: 12s; animation-delay: -7s;"></div>
+    <div class="ios-water-droplet w-10 h-10 top-[38%] left-[48%] opacity-60" style="animation-duration: 8s; animation-delay: -1.5s;"></div>
+  </div>
+
+  <!-- TOP NAVIGATION BAR (iOS Liquid Glass) -->
+  <header class="sticky top-0 z-30 liquid-header">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
-      <!-- Brand -->
+      <!-- Brand + Author tbao2902 -->
       <div class="flex items-center gap-3 min-w-0">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20 shrink-0">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-500 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 ring-1 ring-white/60 shrink-0">
           <i data-lucide="graduation-cap" class="w-6 h-6"></i>
         </div>
         <div class="truncate">
           <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white truncate">PhiloMaster 600</h1>
-            <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">BAS 123 • 2026-2027</span>
+            <h1 class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white truncate">Ôn Triết Học Mác Lê - Nin</h1>
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-gradient-to-r from-indigo-500/15 to-purple-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-300/60 dark:border-indigo-700/60 backdrop-blur-md">
+              <i data-lucide="code-2" class="w-3 h-3"></i>
+              tbao2902
+            </span>
+            <span class="hidden lg:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 border border-white/80 dark:border-slate-700">BAS 123</span>
           </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400 truncate">Ngân hàng 600 câu hỏi & Bài giảng Triết học Mác - Lênin (TNUT)</p>
+          <p class="text-xs text-slate-600 dark:text-slate-400 truncate">Ngân hàng 600 câu hỏi & Bài giảng Triết học Mác - Lênin • Thiết kế bởi <strong class="text-indigo-600 dark:text-indigo-400">tbao2902</strong></p>
         </div>
       </div>
 
-      <!-- Main Tabs -->
-      <nav class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl border border-slate-200/70 dark:border-slate-700/70 overflow-x-auto max-w-full">
+      <!-- Main Tabs (Liquid Pill Dock) -->
+      <nav class="flex items-center gap-1 liquid-pill-dock p-1 rounded-2xl overflow-x-auto max-w-full">
         <button id="nav-dashboard" onclick="switchTab('dashboard')" class="nav-tab px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 whitespace-nowrap">
           <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
           <span>Tổng quan</span>
@@ -86,7 +276,11 @@
 
       <!-- Right Controls -->
       <div class="flex items-center gap-1.5 shrink-0">
-        <button id="btn-theme-toggle" onclick="toggleDarkMode()" title="Đổi giao diện Sáng / Tối" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition">
+        <button id="btn-open-qr" onclick="openQrModal()" title="Mã QR truy cập trang web" class="px-2.5 py-2 rounded-xl liquid-glass hover:scale-105 text-indigo-700 dark:text-indigo-300 text-xs font-bold flex items-center gap-1.5 transition">
+          <i data-lucide="qr-code" class="w-4 h-4"></i>
+          <span class="hidden xl:inline">Mã QR</span>
+        </button>
+        <button id="btn-theme-toggle" onclick="toggleDarkMode()" title="Đổi giao diện Sáng / Tối" class="p-2 rounded-xl liquid-glass hover:scale-105 text-slate-700 dark:text-slate-200 transition">
           <i data-lucide="moon" id="icon-moon" class="w-4 h-4"></i>
           <i data-lucide="sun" id="icon-sun" class="w-4 h-4 hidden"></i>
         </button>
@@ -102,36 +296,69 @@
 
     <!-- ==================== TAB 1: DASHBOARD ==================== -->
     <section id="view-dashboard" class="space-y-6 animate-fade-in">
-      <!-- Hero Banner -->
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-700 via-indigo-600 to-violet-700 text-white p-6 sm:p-8 shadow-lg">
-        <div class="relative z-10 max-w-3xl space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-semibold tracking-wide uppercase">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-            Ngân hàng chuẩn 600 câu hỏi • Học kỳ I (2026 - 2027)
+      <!-- Hero Banner (iOS Liquid Glass + QR Access Card) -->
+      <div class="relative overflow-hidden rounded-3xl liquid-hero text-white p-6 sm:p-8">
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-8 space-y-3.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-xs font-bold tracking-wide uppercase">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                iOS Liquid Glass Edition • 600 Câu Hỏi
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/25 backdrop-blur-md border border-amber-200/40 text-xs font-bold text-amber-100">
+                <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+                Tác giả: tbao2902
+              </span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight">
+              Chinh phục kỳ thi Trắc nghiệm Triết học Mác - Lênin
+            </h2>
+            <p class="text-indigo-50/95 text-sm sm:text-base leading-relaxed">
+              Hệ thống tích hợp trọn vẹn <strong>600 câu hỏi gốc</strong> chia làm 3 chương và 6 cấp độ nhận thức (Nhận biết → Sáng tạo), kèm đáp án và trích dẫn giải thích trực tiếp từ <strong>Bài giảng chi tiết học phần BAS 123</strong>.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-3">
+              <button onclick="startChapterPractice(0)" class="px-5 py-2.5 rounded-2xl bg-white text-indigo-700 font-extrabold text-sm shadow-lg hover:scale-[1.02] active:scale-[0.99] transition flex items-center gap-2">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                Bắt đầu ôn tập ngay
+              </button>
+              <button onclick="switchTab('exam')" class="px-5 py-2.5 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md text-white border border-white/35 font-bold text-sm transition flex items-center gap-2">
+                <i data-lucide="award" class="w-4 h-4"></i>
+                Thi thử 50 câu / 60 phút
+              </button>
+              <button onclick="openQrModal()" class="px-4 py-2.5 rounded-2xl bg-white/15 hover:bg-white/25 backdrop-blur-md text-white border border-white/35 font-bold text-sm transition flex items-center gap-2">
+                <i data-lucide="qr-code" class="w-4 h-4"></i>
+                Mã QR truy cập
+              </button>
+            </div>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight">
-            Chinh phục kỳ thi Trắc nghiệm Triết học Mác - Lênin
-          </h2>
-          <p class="text-indigo-100 text-sm sm:text-base leading-relaxed">
-            Hệ thống tích hợp trọn vẹn <strong>600 câu hỏi gốc</strong> chia làm 3 chương và 6 cấp độ nhận thức (Nhận biết → Sáng tạo), kèm đáp án và trích dẫn giải thích trực tiếp từ <strong>Bài giảng chi tiết học phần BAS 123</strong>.
-          </p>
-          <div class="pt-2 flex flex-wrap gap-3">
-            <button onclick="startChapterPractice(0)" class="px-4 py-2.5 rounded-xl bg-white text-indigo-700 font-bold text-sm shadow hover:bg-indigo-50 transition flex items-center gap-2">
-              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
-              Bắt đầu ôn tập ngay
-            </button>
-            <button onclick="switchTab('exam')" class="px-4 py-2.5 rounded-xl bg-indigo-900/50 hover:bg-indigo-900/70 text-white border border-white/25 font-semibold text-sm transition flex items-center gap-2">
-              <i data-lucide="award" class="w-4 h-4"></i>
-              Thi thử 50 câu / 60 phút
-            </button>
+
+          <!-- Embedded Liquid Glass QR Card on Hero -->
+          <div class="lg:col-span-4 flex justify-center lg:justify-end">
+            <div onclick="openQrModal()" class="cursor-pointer group bg-white/20 hover:bg-white/25 backdrop-blur-xl border border-white/40 rounded-3xl p-4 shadow-2xl flex items-center gap-4 transition-all duration-300 hover:scale-[1.02] max-w-xs w-full">
+              <div class="bg-white p-2 rounded-2xl shadow-md shrink-0">
+                <canvas id="hero-qr-canvas" class="w-20 h-20 block rounded-lg"></canvas>
+              </div>
+              <div class="min-w-0 space-y-1">
+                <div class="inline-flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wider text-amber-200">
+                  <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                  Quét QR Ôn Thi
+                </div>
+                <p class="text-sm font-extrabold text-white leading-snug">Truy cập nhanh trên Điện thoại</p>
+                <p class="text-[11px] text-indigo-100 truncate">By <strong>tbao2902</strong> • Nhấn để phóng to</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -right-12 -top-12 w-72 h-72 bg-cyan-300/25 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute left-1/3 -bottom-16 w-80 h-80 bg-fuchsia-400/25 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- Hero Water Droplets -->
+        <div class="ios-water-droplet w-16 h-16 -top-4 right-1/3 opacity-55" style="animation-duration: 9s;"></div>
+        <div class="ios-water-droplet w-10 h-10 bottom-3 right-1/4 opacity-50" style="animation-duration: 7s; animation-delay: -2s;"></div>
       </div>
 
       <!-- KPI Summary Cards -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
+        <div class="liquid-glass liquid-glass-interactive p-4 sm:p-5 rounded-3xl flex items-center gap-4">
           <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
             <i data-lucide="layers" class="w-6 h-6"></i>
           </div>
@@ -142,7 +369,7 @@
           </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4">
+        <div class="liquid-glass liquid-glass-interactive p-4 sm:p-5 rounded-3xl flex items-center gap-4">
           <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
             <i data-lucide="check-circle-2" class="w-6 h-6"></i>
           </div>
@@ -153,7 +380,7 @@
           </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4 cursor-pointer hover:border-rose-300 dark:hover:border-rose-800 transition" onclick="openReviewSubmode('wrong')">
+        <div class="liquid-glass liquid-glass-interactive p-4 sm:p-5 rounded-3xl flex items-center gap-4 cursor-pointer hover:border-rose-300 dark:hover:border-rose-800 transition" onclick="openReviewSubmode('wrong')">
           <div class="w-12 h-12 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
             <i data-lucide="x-circle" class="w-6 h-6"></i>
           </div>
@@ -164,7 +391,7 @@
           </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4 cursor-pointer hover:border-amber-300 dark:hover:border-amber-800 transition" onclick="openReviewSubmode('bookmarked')">
+        <div class="liquid-glass liquid-glass-interactive p-4 sm:p-5 rounded-3xl flex items-center gap-4 cursor-pointer hover:border-amber-300 dark:hover:border-amber-800 transition" onclick="openReviewSubmode('bookmarked')">
           <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
             <i data-lucide="bookmark" class="w-6 h-6"></i>
           </div>
@@ -188,7 +415,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           <!-- Chapter 1 Card -->
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+          <div class="liquid-glass liquid-glass-interactive rounded-3xl p-5 flex flex-col justify-between">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300">CHƯƠNG 1 • 95 CÂU</span>
@@ -213,7 +440,7 @@
           </div>
 
           <!-- Chapter 2 Card -->
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+          <div class="liquid-glass liquid-glass-interactive rounded-3xl p-5 flex flex-col justify-between">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">CHƯƠNG 2 • 240 CÂU</span>
@@ -239,7 +466,7 @@
           </div>
 
           <!-- Chapter 3 Card -->
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex flex-col justify-between hover:shadow-md transition">
+          <div class="liquid-glass liquid-glass-interactive rounded-3xl p-5 flex flex-col justify-between">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">CHƯƠNG 3 • 265 CÂU</span>
@@ -267,7 +494,7 @@
       </div>
 
       <!-- Difficulty Levels Breakdown & Quick Filter -->
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm">
+      <div class="liquid-glass rounded-3xl p-5 shadow-sm">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
             <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -286,7 +513,7 @@
     <!-- ==================== TAB 2: PRACTICE MODE (ÔN TẬP 600 CÂU) ==================== -->
     <section id="view-practice" class="hidden space-y-5 animate-fade-in">
       <!-- Filter & Settings Bar -->
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm space-y-3">
+      <div class="liquid-glass rounded-3xl p-4 shadow-sm space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <!-- Chapter & Section Filters -->
           <div class="flex flex-wrap items-center gap-2">
@@ -358,7 +585,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <!-- Question Display Column (8 cols) -->
         <div class="lg:col-span-8 space-y-4">
-          <div id="practice-question-card" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-5">
+          <div id="practice-question-card" class="liquid-glass rounded-3xl p-5 sm:p-7 shadow-sm space-y-5">
             <!-- Header info -->
             <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
               <div class="flex flex-wrap items-center gap-2">
@@ -428,7 +655,7 @@
         </div>
 
         <!-- Question Grid Palette Column (4 cols) -->
-        <div class="lg:col-span-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm space-y-4">
+        <div class="lg:col-span-4 liquid-glass rounded-3xl p-4 sm:p-5 shadow-sm space-y-4">
           <div class="flex items-center justify-between">
             <h4 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-1.5">
               <i data-lucide="grid" class="w-4 h-4 text-indigo-600"></i>
@@ -451,7 +678,7 @@
     <!-- ==================== TAB 3: MOCK EXAM MODE (THI THỬ 50 CÂU / 60 PHÚT) ==================== -->
     <section id="view-exam" class="hidden space-y-6 animate-fade-in">
       <!-- Exam Setup Screen -->
-      <div id="exam-setup-panel" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-sm max-w-4xl mx-auto space-y-6">
+      <div id="exam-setup-panel" class="liquid-glass rounded-3xl p-6 sm:p-8 shadow-sm max-w-4xl mx-auto space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
           <div class="space-y-1">
             <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
@@ -517,7 +744,7 @@
       <!-- Active Exam Runner Screen -->
       <div id="exam-active-panel" class="hidden space-y-5">
         <!-- Sticky Exam Status Bar -->
-        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div class="liquid-glass rounded-3xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-3">
             <span id="exam-title-badge" class="px-3 py-1 rounded-xl text-xs font-extrabold bg-indigo-600 text-white">ĐỀ THI #1</span>
             <div>
@@ -564,7 +791,7 @@
         <!-- Exam Main Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <!-- Exam Question Card (8 cols) -->
-          <div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7 shadow-sm space-y-5">
+          <div class="lg:col-span-8 liquid-glass rounded-3xl p-5 sm:p-7 shadow-sm space-y-5">
             <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
               <div class="flex flex-wrap items-center gap-2">
                 <span id="eq-index-badge" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">Câu 1 / 50</span>
@@ -601,7 +828,7 @@
           </div>
 
           <!-- Exam Palette (4 cols) -->
-          <div class="lg:col-span-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm space-y-4">
+          <div class="lg:col-span-4 liquid-glass rounded-3xl p-4 sm:p-5 shadow-sm space-y-4">
             <h4 class="font-bold text-sm text-slate-900 dark:text-white">Phiếu trả lời 50 câu</h4>
             <div id="exam-palette-grid" class="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2"></div>
           </div>
@@ -611,7 +838,7 @@
 
     <!-- ==================== TAB 4: REVIEW WRONG & BOOKMARKED ==================== -->
     <section id="view-review" class="hidden space-y-5 animate-fade-in">
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div class="liquid-glass rounded-3xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div class="space-y-1">
           <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
             <i data-lucide="flame" class="w-5 h-5 text-rose-500"></i>
@@ -643,7 +870,7 @@
 
     <!-- ==================== TAB 5: FULL-TEXT SEARCH & LECTURE LOOKUP ==================== -->
     <section id="view-search" class="hidden space-y-5 animate-fade-in">
-      <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+      <div class="liquid-glass rounded-3xl p-5 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2 class="text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
@@ -664,7 +891,7 @@
 
         <div class="relative">
           <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-          <input id="search-input" type="text" oninput="runSearch()" placeholder="Gõ từ khóa bất kỳ để tìm kiếm trong 600 câu hỏi..." class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+          <input id="search-input" type="text" oninput="debouncedSearch()" placeholder="Gõ từ khóa bất kỳ để tìm kiếm trong 600 câu hỏi..." class="w-full pl-11 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
         </div>
         <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
           <span id="search-result-count">Hiển thị 50 câu đầu tiên (trên tổng 600 câu)</span>
@@ -676,9 +903,79 @@
 
   </main>
 
+  <!-- AUTHOR & LIQUID GLASS FOOTER -->
+  <footer class="max-w-7xl w-full mx-auto px-3 sm:px-6 pb-8 pt-2">
+    <div class="liquid-glass rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600 dark:text-slate-300">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white flex items-center justify-center font-extrabold shadow-md">
+          TB
+        </div>
+        <div>
+          <p class="font-bold text-slate-900 dark:text-white">Ôn Triết Học Mác Lê - Nin — Thiết kế & Phát triển bởi <span class="text-indigo-600 dark:text-indigo-400 font-extrabold">tbao2902</span></p>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">Ngân hàng 600 câu hỏi chuẩn & Bài giảng Triết học Mác - Lênin (BAS 123) • Giao diện iOS Liquid Glass</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openQrModal()" class="px-3.5 py-2 rounded-2xl bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-700 dark:text-indigo-300 border border-indigo-400/30 font-bold flex items-center gap-1.5 transition">
+          <i data-lucide="qr-code" class="w-4 h-4"></i>
+          <span>Hiển thị Mã QR truy cập Web</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- QR CODE ACCESS MODAL (iOS Liquid Glass) -->
+  <div id="qr-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="liquid-glass rounded-3xl max-w-md w-full p-6 sm:p-7 space-y-5 animate-fade-in relative">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-md">
+            <i data-lucide="qr-code" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Mã QR Truy Cập Trang Web</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Tác giả: <strong class="text-indigo-600 dark:text-indigo-400">tbao2902</strong></p>
+          </div>
+        </div>
+        <button onclick="closeQrModal()" class="p-2 rounded-xl hover:bg-slate-200/60 dark:hover:bg-slate-800/60 text-slate-500 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="bg-white p-5 rounded-3xl shadow-inner border border-slate-200/80 flex flex-col items-center justify-center space-y-3">
+        <canvas id="modal-qr-canvas" class="w-52 h-52 block rounded-xl"></canvas>
+        <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+          Quét bằng Camera iPhone / Android hoặc Zalo
+        </span>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">Đường dẫn (URL) tích hợp trong mã QR:</label>
+        <div class="flex items-center gap-2">
+          <input id="qr-url-input" type="text" oninput="updateQrCodeFromInput()" class="flex-1 px-3.5 py-2 rounded-xl bg-white/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-700 text-xs font-mono text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Nhập link trang web của bạn..." />
+          <button onclick="copyQrUrl()" class="px-3 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shrink-0 flex items-center gap-1 transition">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Sao chép</span>
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-500 dark:text-slate-400">Bạn có thể dán bất kỳ tên miền/link chia sẻ nào vào ô trên, mã QR sẽ tự động cập nhật ngay lập tức hoặc tải ảnh QR về máy.</p>
+      </div>
+
+      <div class="flex items-center justify-between gap-2 pt-1">
+        <button onclick="downloadQrImage()" class="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-extrabold shadow-md flex items-center justify-center gap-1.5 transition">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Tải ảnh Mã QR (.PNG)</span>
+        </button>
+        <button onclick="closeQrModal()" class="px-5 py-2.5 rounded-2xl border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- IN-PAGE MODAL FOR CONFIRMATIONS (No alert/confirm used) -->
   <div id="app-modal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full p-6 shadow-xl space-y-4 animate-fade-in">
+    <div class="liquid-glass rounded-3xl max-w-md w-full p-6 shadow-xl space-y-4 animate-fade-in">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-600 flex items-center justify-center shrink-0">
           <i data-lucide="alert-triangle" class="w-5 h-5"></i>
@@ -1652,7 +1949,7 @@
 
       if (activeItems.length === 0) {
         container.innerHTML = `
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-10 text-center space-y-2">
+          <div class="liquid-glass rounded-3xl p-10 text-center space-y-2">
             <p class="text-base font-bold text-slate-700 dark:text-slate-200">
               ${state.reviewSubmode === 'wrong' ? 'Tuyệt vời! Bạn hiện không có câu nào làm sai.' : 'Bạn chưa đánh dấu sao câu hỏi nào.'}
             </p>
@@ -1665,7 +1962,7 @@
       container.innerHTML = activeItems.map(q => {
         const userAns = state.answered[q.id];
         return `
-          <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-3">
+          <div class="liquid-glass rounded-3xl p-5 shadow-sm space-y-3">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">Chương ${q.chapter} • Câu ${q.number}</span>
@@ -1733,6 +2030,12 @@
     }
 
     // ==================== TAB 5: SEARCH ====================
+    let searchDebounceTimer = null;
+    function debouncedSearch() {
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(runSearch, 140);
+    }
+
     function runSearch() {
       const qStr = (document.getElementById('search-input').value || '').trim().toLowerCase();
       const chFilter = parseInt(document.getElementById('search-chapter-filter').value, 10);
@@ -1750,7 +2053,7 @@
 
       const listEl = document.getElementById('search-results-list');
       listEl.innerHTML = shown.map(q => `
-        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm space-y-2.5">
+        <div class="liquid-glass rounded-3xl p-4 sm:p-5 shadow-sm space-y-2.5">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
               <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 text-xs font-bold">Chương ${q.chapter} • Câu ${q.number}</span>
@@ -1817,12 +2120,113 @@
       }
     });
 
+    // QR Code Management (Author: tbao2902)
+    function getDefaultWebUrl() {
+      const href = (window.location && window.location.href) ? window.location.href : '';
+      if (href && href.startsWith('http') && !href.includes('about:srcdoc')) {
+        return href;
+      }
+      return 'https://tbao2902.github.io/philomaster-600/';
+    }
+
+    function renderAllQrCanvases(urlValue) {
+      const targetUrl = (urlValue || '').trim() || getDefaultWebUrl();
+      if (typeof QRious === 'undefined') return;
+      const heroCanvas = document.getElementById('hero-qr-canvas');
+      if (heroCanvas) {
+        new QRious({
+          element: heroCanvas,
+          value: targetUrl,
+          size: 160,
+          level: 'H',
+          background: '#ffffff',
+          foreground: '#312e81'
+        });
+      }
+      const modalCanvas = document.getElementById('modal-qr-canvas');
+      if (modalCanvas) {
+        new QRious({
+          element: modalCanvas,
+          value: targetUrl,
+          size: 280,
+          level: 'H',
+          background: '#ffffff',
+          foreground: '#1e1b4b'
+        });
+      }
+    }
+
+    function openQrModal() {
+      const modal = document.getElementById('qr-modal');
+      const input = document.getElementById('qr-url-input');
+      if (input && !input.value) {
+        input.value = getDefaultWebUrl();
+      }
+      renderAllQrCanvases(input ? input.value : getDefaultWebUrl());
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeQrModal() {
+      const modal = document.getElementById('qr-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function updateQrCodeFromInput() {
+      const input = document.getElementById('qr-url-input');
+      if (input) renderAllQrCanvases(input.value);
+    }
+
+    function copyQrUrl() {
+      const input = document.getElementById('qr-url-input');
+      if (!input) return;
+      input.select();
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(input.value).then(() => {
+            showToast('Đã sao chép đường dẫn trang web!');
+          }).catch(() => {
+            document.execCommand('copy');
+            showToast('Đã sao chép đường dẫn trang web!');
+          });
+        } else {
+          document.execCommand('copy');
+          showToast('Đã sao chép đường dẫn trang web!');
+        }
+      } catch (e) {
+        document.execCommand('copy');
+        showToast('Đã sao chép đường dẫn trang web!');
+      }
+    }
+
+    function downloadQrImage() {
+      const modalCanvas = document.getElementById('modal-qr-canvas');
+      if (!modalCanvas) return;
+      const link = document.createElement('a');
+      link.download = 'PhiloMaster600-QR-tbao2902.png';
+      link.href = modalCanvas.toDataURL('image/png');
+      link.click();
+      showToast('Đã tải xuống ảnh Mã QR!');
+    }
+
+    // Hardware Performance Optimizer for Low-to-High-End Devices
+    function initWaterDropletPhysics() {
+      const cores = navigator.hardwareConcurrency || 8;
+      const mem = navigator.deviceMemory || 8;
+      if (cores <= 2 || mem <= 2) {
+        document.body.classList.add('perf-lite');
+      }
+    }
+
     // Initialize App on Load
     window.addEventListener('DOMContentLoaded', () => {
+      initWaterDropletPhysics();
       loadState();
       applyTheme();
       document.getElementById('toggle-auto-advance').checked = state.autoAdvanceOnCorrect;
       document.getElementById('toggle-hide-correct').checked = state.hideCorrectInPractice;
+      const qrInput = document.getElementById('qr-url-input');
+      if (qrInput) qrInput.value = getDefaultWebUrl();
+      renderAllQrCanvases(getDefaultWebUrl());
       applyPracticeFilters();
       switchTab('dashboard');
       if (window.lucide) window.lucide.createIcons();
